@@ -1,9 +1,9 @@
 import { StyleSheet, Text, View } from 'react-native';
 
-export default function ErrorScreen() {
+export default function HomeScreen() {
   return (
     <View style={styles.container}>
-      <Text>Error Screen</Text>
+      <Text>Home Tab Screen</Text>
     </View>
   );
 }
