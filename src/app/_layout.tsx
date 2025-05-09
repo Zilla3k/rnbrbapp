@@ -11,11 +11,11 @@ import SplashScreen from './loading_screen';
 export default function RootLayout() {
   const [isLoading, setIsLoading] = useState(true);
   const [loaded] = useFonts({
-    SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
+    SpaceMono: require('../../assets/fonts/SpaceMono-Regular.ttf'),
   });
 
   useEffect(() => {
-    const timer = setTimeout(() => setIsLoading(false), 1000);
+    const timer = setTimeout(() => setIsLoading(false), 6000);
     return () => clearTimeout(timer);
   }, []);
 

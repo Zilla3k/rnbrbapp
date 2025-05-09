@@ -3,6 +3,9 @@
     "name": "app-barber",
     "slug": "app-barber",
     "version": "1.0.0",
+    "extra": {
+      "API_URL": "https://shaky-memes-turn.loca.lt/api"
+    },
     "orientation": "portrait",
     "scheme": "appbarber",
     "userInterfaceStyle": "automatic",

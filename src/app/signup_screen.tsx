@@ -1,14 +1,13 @@
 import { useRouter } from 'expo-router';
 import { Button, StyleSheet, Text, View } from 'react-native';
 
-export default function HomeScreen() {
+export default function SignupScreen() {
   const router = useRouter();
-
+  
   return (
     <View style={styles.container}>
-      <Text>Login Screen</Text>
-      <Button onPress={() => router.push('/signup_screen')} title="Go to Signup" />
-      <Button onPress={() => router.replace('/home')} title="Go to Home Tab" />
+      <Text>Signup Screen</Text>
+      <Button onPress={() => router.push('/')} title="Go to Signup" />
     </View>
   );
 }

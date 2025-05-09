@@ -15,7 +15,7 @@ export default function SplashScreen() {
         source={require('../assets/images/loading_wave.json')} 
         autoPlay
         loop
-        style={styles.animation}
+        style={styles.animation_wave}
       />
     </View>
   );
@@ -26,9 +26,14 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#FFFFFF'
+    backgroundColor: '#FFFFFF',
   },
   animation: {
+    width: 350,
+    height: 350,
+    marginBottom: -80,
+  },
+  animation_wave: {
     width: 200,
     height: 200,
   },
