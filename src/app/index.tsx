@@ -3,12 +3,12 @@ import { Link, router } from 'expo-router';
 import React, { useState } from 'react';
 import { ActivityIndicator, Alert, StyleSheet, Text, View } from 'react-native';
 
-import { ButtonCustom } from '../components/buttonCustom';
-import { InputCustom } from "../components/inputCustom";
+import { ButtonCustom } from '@/components/buttonCustom';
+import { InputCustom } from "@/components/inputCustom";
 
-import { colors, fontFamily } from "../styles/theme";
+import { colors, fontFamily } from "@/styles/theme";
 
-import { api } from "../services/api";
+import { api } from "@/services/api";
 
 export default function HomeScreen() {
   const [email, setEmail] = useState('');
@@ -68,6 +68,15 @@ export default function HomeScreen() {
       onChangeText={setPassword}
       />
 
+      <View style={{ height: 10 }} />
+      <View style={styles.textRecovery}>
+        <Text style={styles.textMedium}>
+          <Link href="/recovery_screen" style={styles.link}>
+            Esqueceu a senha?
+          </Link>
+        </Text>
+      </View>
+
       <ButtonCustom 
       title="Entrar"
       onPress={handleLogin}
@@ -96,7 +105,11 @@ const styles = StyleSheet.create({
   },
   text:{
     marginTop: 10,
-    color: colors.gray.base
+    color: colors.gray.base,
+  },
+  textRecovery: {
+    marginLeft: "10%",
+    alignSelf: 'flex-start'
   },
   textMedium: {
     fontFamily: fontFamily.medium,
