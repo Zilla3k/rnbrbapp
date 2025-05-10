@@ -15,7 +15,7 @@ export default function RootLayout() {
   });
 
   useEffect(() => {
-    const timer = setTimeout(() => setIsLoading(false), 6000);
+    const timer = setTimeout(() => setIsLoading(false), 1);
     return () => clearTimeout(timer);
   }, []);
 
@@ -32,6 +32,7 @@ export default function RootLayout() {
       <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
       <Stack.Screen name="index" options={{ headerShown: false }} />
       <Stack.Screen name="signup_screen" options={{ headerShown: false }} />
+      <Stack.Screen name="recovery_screen" options={{ headerShown: false }} />
       <Stack.Screen name="+not-found" />
     </Stack>
     <StatusBar style="auto" />
