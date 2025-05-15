@@ -1,6 +1,7 @@
 import { ButtonCustom } from '@/components/buttonCustom';
 import { InputCustom } from '@/components/inputCustom';
 import { colors } from '@/styles/colors';
+import { router } from 'expo-router';
 import React, { useState } from 'react';
 import { ActivityIndicator, Alert, StyleSheet, Text, View } from 'react-native';
 
@@ -19,6 +20,7 @@ const RecoveryScreen = () => {
     setTimeout(() => {
       Alert.alert('Sucesso', 'As instruções de recuperação foram enviadas para o seu email.');
       setIsLoading(false)
+      router.replace('/');
     }, 3000);
   };
 
