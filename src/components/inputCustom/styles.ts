@@ -3,7 +3,7 @@ import { colors } from "../../styles/theme";
 
 export const styles = StyleSheet.create({
   input: {
-    width: 317,
+    width: "80%",
     height: 60,
     borderRadius: 8,
     padding: 20,

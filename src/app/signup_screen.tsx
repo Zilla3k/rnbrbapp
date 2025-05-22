@@ -1,10 +1,10 @@
-import { Link } from 'expo-router';
 import { StyleSheet, Text, View } from 'react-native';
 
 import { ButtonCustom } from '@/components/buttonCustom';
 import { InputCustom } from '@/components/inputCustom';
 import { colors } from '@/styles/colors';
 import { fontFamily } from '@/styles/font-family';
+import { router } from 'expo-router';
 import { useState } from 'react';
 
 export default function SignupScreen() {
@@ -59,7 +59,16 @@ export default function SignupScreen() {
         onPress={handleSubmit}
       />
       <Text style={styles.text}>
-        Ja possui uma conta? <Text style={styles.textMedium}><Link href="/" style={styles.link}>Fazer login</Link></Text>
+        Ja possui uma conta? <Text style={styles.textMedium}>
+          <Text 
+            onPress={()=>{
+              router.push('/')
+            }}
+            style={styles.link}
+            >
+              Fazer login
+          </Text>
+        </Text>
       </Text>
     </View>
   );

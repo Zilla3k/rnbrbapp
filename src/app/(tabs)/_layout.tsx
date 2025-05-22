@@ -1,36 +1,45 @@
+import { colors } from '@/styles/theme';
+import { Ionicons } from '@expo/vector-icons';
 import { Tabs } from 'expo-router';
-import React from 'react';
-import { Platform, useColorScheme } from 'react-native';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
-export default function TabLayout() {
-  const colorScheme = useColorScheme();
+function getTabIconName(routeName: string): keyof typeof Ionicons.glyphMap {
+  switch (routeName) {
+    case 'home':
+      return 'home';
+    case 'schedule':
+      return 'calendar';
+    case 'profile':
+      return 'person';
+    case 'maps':
+      return 'map';
+    default:
+      return 'ellipse';
+  }
+}
 
+const commonTabOptions = {
+  tabBarActiveTintColor: colors.gold.base,
+  tabBarInactiveTintColor: colors.gray.base,
+  headerShown: false,
+};
+
+export default function Layout() {
   return (
-    <Tabs
-      screenOptions={{
-        tabBarActiveTintColor: colorScheme === 'dark' ? '#000' : '#fff',
-        headerShown: false,
-        tabBarStyle: Platform.select({
-          ios: {
-            position: 'absolute',
-          },
-          default: {},
-        }),
-      }}>
-      <Tabs.Screen
-        name="home"
-        options={{
-          title: 'Home',
-          tabBarIcon: ({ color }) => null, 
-        }}
-      />
-      <Tabs.Screen
-        name="profile"
-        options={{
-          title: 'Profile',
-          tabBarIcon: ({ color }) => null, 
-        }}
-      />
-    </Tabs>
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <Tabs
+        screenOptions={({ route }) => ({
+          ...commonTabOptions,
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name={getTabIconName(route.name)} size={size} color={color} />
+          ),
+        })}
+      >
+        <Tabs.Screen name="home" options={{ title: 'Início' }} />
+        <Tabs.Screen name="schedule" options={{ title: 'Agenda' }} />
+        <Tabs.Screen name="maps" options={{ title: 'Mapa' }} />
+        <Tabs.Screen name="profile" options={{ title: 'Perfil' }} />
+      </Tabs>
+    </GestureHandlerRootView>
   );
 }

@@ -3,7 +3,7 @@ import { colors, fontFamily } from "../../styles/theme";
 
 export const styles = StyleSheet.create({
   button: {
-    width: 317,
+    width: "80%",
     height: 60,
     borderRadius: 8,
     backgroundColor: colors.gold.base,
