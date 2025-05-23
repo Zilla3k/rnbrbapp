@@ -110,6 +110,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+    paddingHorizontal: 40,
   },
   title:{
     fontFamily: fontFamily.regular,
@@ -120,7 +121,6 @@ const styles = StyleSheet.create({
     color: colors.gray.base,
   },
   textRecovery: {
-    marginLeft: "10%",
     alignSelf: 'flex-start'
   },
   textMedium: {
