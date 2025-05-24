@@ -11,7 +11,7 @@ function getTabIconName(routeName: string): keyof typeof Ionicons.glyphMap {
       return 'calendar';
     case 'profile':
       return 'person';
-    case 'maps':
+    case 'map':
       return 'map';
     default:
       return 'ellipse';
@@ -37,7 +37,7 @@ export default function Layout() {
       >
         <Tabs.Screen name="home" options={{ title: 'Início' }} />
         <Tabs.Screen name="schedule" options={{ title: 'Agenda' }} />
-        <Tabs.Screen name="maps" options={{ title: 'Mapa' }} />
+        <Tabs.Screen name="map" options={{ title: 'Mapa' }} />
         <Tabs.Screen name="profile" options={{ title: 'Perfil' }} />
       </Tabs>
     </GestureHandlerRootView>
