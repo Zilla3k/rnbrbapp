@@ -1,7 +1,7 @@
 import { colors } from '@/styles/colors';
 import BottomSheet, { BottomSheetFlatList } from '@gorhom/bottom-sheet';
 import { useMemo, useRef, useState } from 'react';
-import { Alert, Linking, Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Alert, Image, Linking, Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import MapView, { Callout, Marker } from 'react-native-maps';
 
 const STATIC_BARBERS = [
@@ -101,7 +101,7 @@ export default function MapScreen() {
   const mapRef = useRef<MapView | null>(null);
   const bottomSheetRef = useRef<BottomSheet>(null);
 
-  const snapPoints = useMemo(() => ['25%', '90%'], []);
+  const snapPoints = useMemo(() => ['30%', '100%'], []);
 
   const handleOpenDeviceMap = async (latitude: number, longitude: number, label: string) => {
     const schema = Platform.select({
@@ -124,14 +124,27 @@ export default function MapScreen() {
     Linking.openURL(url);
   };
 
+  const handleOpenDevicePhone = async (phone: string) => {
+    const cleanedPhone = phone.replace(/[^\d]/g, '');
+    const tel = `tel:${cleanedPhone}`;
+
+    const canOpen = await Linking.canOpenURL(tel);
+    if (!canOpen) {
+      Alert.alert('Erro', 'Não foi possível abrir o aplicativo de telefone!');
+      return;
+    }
+
+    Linking.openURL(tel);
+  };
+
   const handlePlacePress = (latitude: number, longitude: number) => {
     if (mapRef.current) {
-      mapRef.current.animateToRegion({
+      mapRef.current?.animateToRegion({
         latitude,
         longitude,
         latitudeDelta: 0.005,
         longitudeDelta: 0.005,
-      });
+      })
     }
   };
 
@@ -152,12 +165,22 @@ export default function MapScreen() {
             key={barber.id}
             coordinate={{ latitude: barber.latitude, longitude: barber.longitude }}
           >
-            <Callout onPress={() => handleOpenDeviceMap(barber.latitude, barber.longitude, barber.name)}>
+            <Image
+              source={require('@/assets/pin.png')}
+              style={{ height: 60}}
+              resizeMode="contain"
+            />
+            <Callout onPress={() =>
+              handleOpenDeviceMap(barber.latitude, barber.longitude, barber.name)
+            }
+            >
               <View style={styles.callout}>
                 <Text style={styles.titleMap}>{barber.name}</Text>
-                <Text style={styles.addressMap}>{barber.address}</Text>
                 <Text style={styles.phoneMap}>{barber.phone}</Text>
-                <Text style={styles.directions}>Toque para ver a rota</Text>
+                <Text style={styles.addressMap}>{barber.address}</Text>
+                <Text style={styles.directions}>
+                  Toque para ver a rota
+                </Text>
               </View>
             </Callout>
           </Marker>
@@ -172,7 +195,7 @@ export default function MapScreen() {
         backgroundStyle={styles.bottomSheet}
         enableContentPanningGesture={true}
         enableHandlePanningGesture={true}
-        topInset={200}
+        topInset={100}
       >
         <BottomSheetFlatList
           data={barbers}
@@ -180,15 +203,23 @@ export default function MapScreen() {
           renderItem={({ item }) => (
             <View style={styles.itemContainer}>
               <Text style={styles.barberName}>{item.name}</Text>
+              <TouchableOpacity
+                onPress={() => 
+                  handleOpenDevicePhone(item.phone)
+                }
+              >
+                <Text style={styles.barberPhone}>{item.phone}</Text>
+              </TouchableOpacity>
+
               <Text style={styles.barberAddress}>{item.address}</Text>
-                <TouchableOpacity
-                onPress={() => {
-                  handlePlacePress(item.latitude, item.longitude);
-                  bottomSheetRef.current?.snapToIndex(0);
-                }}
-                >
+              <TouchableOpacity
+              onPress={() => {
+                handlePlacePress(item.latitude, item.longitude);
+                bottomSheetRef.current?.snapToIndex(0);
+              }}
+              >
                 <Text style={styles.viewOnMap}>Ver no Mapa</Text>
-                </TouchableOpacity>
+              </TouchableOpacity>
             </View>
           )}
           contentContainerStyle={styles.content}
@@ -210,6 +241,8 @@ const styles = StyleSheet.create({
     backgroundColor: "#F8F8F8"
   },
   callout: {
+    minWidth: 180,
+    maxWidth: 380,
     padding: 10,
   },
   titleMap: {
@@ -218,11 +251,13 @@ const styles = StyleSheet.create({
   },
   addressMap: {
     fontSize: 14,
+    marginBottom: 10
   },
   phoneMap: {
     fontSize: 14,
   },
   directions: {
+    textTransform: 'uppercase',
     fontSize: 12,
     color: 'blue',
   },
@@ -252,6 +287,12 @@ const styles = StyleSheet.create({
   barberName: {
     fontSize: 16,
     fontWeight: 'bold',
+    marginBottom: 5
+  },
+  barberPhone: {
+    fontSize: 14,
+    color: 'blue',
+    marginBottom: 5
   },
   barberAddress: {
     fontSize: 14,
